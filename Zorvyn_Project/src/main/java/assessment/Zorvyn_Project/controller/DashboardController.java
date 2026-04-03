@@ -1,9 +1,9 @@
 package assessment.Zorvyn_Project.controller;
 
-
 import assessment.Zorvyn_Project.entity.FinancialRecord;
 import assessment.Zorvyn_Project.service.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,19 +17,22 @@ public class DashboardController {
     private DashboardService service;
 
     @GetMapping("/summary")
-    public Map<String, Double> getSummary(){
-        return service.summary();
+    public ResponseEntity<Map<String, Double>> getSummary(){
+        return ResponseEntity.ok(service.summary());
     }
+
     @GetMapping("/category")
-    public Map<String, Double> categoryWise() {
-        return service.categoryWise();
+    public ResponseEntity<Map<String, Double>> categoryWise() {
+        return ResponseEntity.ok(service.categoryWise());
     }
+
     @GetMapping("/recent")
-    public List<FinancialRecord> recent() {
-        return service.recent();
+    public ResponseEntity<List<FinancialRecord>> recent() {
+        return ResponseEntity.ok(service.recent());
     }
+
     @GetMapping("/monthly")
-    public Map<String, Double> monthly() {
-        return service.monthly();
+    public ResponseEntity<Map<String, Double>> monthly() {
+        return ResponseEntity.ok(service.monthly());
     }
 }

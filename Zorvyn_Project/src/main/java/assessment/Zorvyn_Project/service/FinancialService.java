@@ -5,6 +5,8 @@ package assessment.Zorvyn_Project.service;
 import assessment.Zorvyn_Project.entity.FinancialRecord;
 import assessment.Zorvyn_Project.repository.FinancialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,8 +36,8 @@ public class FinancialService {
 
         return repo.findByDeletedFalse();
     }
-    public List<FinancialRecord> getAll() {
-        return repo.findByDeletedFalse();
+    public Page<FinancialRecord> getAll(int page, int size) {
+        return repo.findByDeletedFalse(PageRequest.of(page, size));
     }
 
     public FinancialRecord update(Long id, FinancialRecord r) {
@@ -50,5 +52,13 @@ public class FinancialService {
         FinancialRecord r = repo.findById(id).orElseThrow();
         r.setDeleted(true);
         repo.save(r);
+    }
+    public void permanentDelete(Long id) {
+        repo.deleteById(id);
+    }
+    public List<FinancialRecord> search(String keyword) {
+
+        return repo
+                .findByCategoryContainingIgnoreCaseAndDeletedFalse(keyword);
     }
 }

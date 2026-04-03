@@ -1,11 +1,19 @@
 package assessment.Zorvyn_Project.dto;
 
 
+import jakarta.validation.constraints.NotBlank;
+
 public class SignupRequest {
 
+    @NotBlank(message = "Username is required")
     private String username;
+
+    @NotBlank(message = "Password is required")
     private String password;
+
+    @NotBlank(message = "Role is required")
     private String role;
+
 
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }

@@ -1,10 +1,12 @@
 package assessment.Zorvyn_Project.controller;
 
-
 import assessment.Zorvyn_Project.dto.FinancialRecordDTO;
 import assessment.Zorvyn_Project.entity.FinancialRecord;
 import assessment.Zorvyn_Project.service.FinancialService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +21,7 @@ public class FinancialController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
-    public FinancialRecord create(@RequestBody FinancialRecordDTO dto){
+    public ResponseEntity<FinancialRecord> create(@Valid @RequestBody FinancialRecordDTO dto){
 
         FinancialRecord r = new FinancialRecord();
         r.setAmount(dto.getAmount());
@@ -28,32 +30,49 @@ public class FinancialController {
         r.setDate(dto.getDate());
         r.setNote(dto.getNote());
 
-        return service.create(r);
+        return ResponseEntity.ok(service.create(r));
     }
+
     @GetMapping("/filter")
-    public List<FinancialRecord> filter(
+    public ResponseEntity<List<FinancialRecord>> filter(
             @RequestParam(required = false) String type,
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String date
     ) {
-        return service.filter(type, category, date);
+        return ResponseEntity.ok(service.filter(type, category, date));
     }
 
     @GetMapping
     @PreAuthorize("hasAnyAuthority('ANALYST','ADMIN')")
-    public List<FinancialRecord> getAll(){
-        return service.getAll();
+    public ResponseEntity<Page<FinancialRecord>> getAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ){
+        return ResponseEntity.ok(service.getAll(page, size));
     }
+
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public FinancialRecord update(@PathVariable Long id,
-                                  @RequestBody FinancialRecord r){
-        return service.update(id,r);
+    public ResponseEntity<FinancialRecord> update(@PathVariable Long id,
+                                                  @RequestBody FinancialRecord r){
+        return ResponseEntity.ok(service.update(id, r));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<String> delete(@PathVariable Long id) {
         service.delete(id);
+        return ResponseEntity.ok("Record soft deleted");
+    }
+
+    @DeleteMapping("/permanent/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<String> permanentDelete(@PathVariable Long id) {
+        service.permanentDelete(id);
+        return ResponseEntity.ok("Record permanently deleted");
+    }
+    @GetMapping("/search")
+    public ResponseEntity<List<FinancialRecord>> search(@RequestParam String keyword){
+        return ResponseEntity.ok(service.search(keyword));
     }
 }
