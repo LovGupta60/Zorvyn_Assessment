@@ -23,7 +23,7 @@ public class FinancialRecord {
     private LocalDate date;
     private String note;
 
-    private boolean deleted = false;
+    private Boolean deleted = false;
 
     public Long getId() {
         return id;

@@ -22,14 +22,12 @@ public class FinancialController {
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<FinancialRecord> create(@Valid @RequestBody FinancialRecordDTO dto){
-
         FinancialRecord r = new FinancialRecord();
         r.setAmount(dto.getAmount());
         r.setType(dto.getType());
         r.setCategory(dto.getCategory());
         r.setDate(dto.getDate());
         r.setNote(dto.getNote());
-
         return ResponseEntity.ok(service.create(r));
     }
 
@@ -53,8 +51,7 @@ public class FinancialController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<FinancialRecord> update(@PathVariable Long id,
-                                                  @RequestBody FinancialRecord r){
+    public ResponseEntity<FinancialRecord> update(@PathVariable Long id, @RequestBody FinancialRecord r){
         return ResponseEntity.ok(service.update(id, r));
     }
 

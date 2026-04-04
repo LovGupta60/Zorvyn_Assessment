@@ -59,6 +59,6 @@ public class FinancialService {
     public List<FinancialRecord> search(String keyword) {
 
         return repo
-                .findByCategoryContainingIgnoreCaseAndDeletedFalse(keyword);
+                .search(keyword);
     }
 }

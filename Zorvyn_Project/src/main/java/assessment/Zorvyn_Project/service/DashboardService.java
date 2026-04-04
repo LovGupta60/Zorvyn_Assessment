@@ -26,17 +26,14 @@ public class DashboardService {
             empty.put("balance", 0.0);
             return empty;
         }
-
         double income = list.stream()
                 .filter(x -> "income".equalsIgnoreCase(x.getType()))
                 .mapToDouble(FinancialRecord::getAmount)
                 .sum();
-
         double expense = list.stream()
                 .filter(x -> "expense".equalsIgnoreCase(x.getType()))
                 .mapToDouble(FinancialRecord::getAmount)
                 .sum();
-
         Map<String, Double> map = new HashMap<>();
         map.put("income", income);
         map.put("expense", expense);
@@ -45,11 +42,8 @@ public class DashboardService {
         return map;
     }
     public Map<String, Double> category() {
-
         List<FinancialRecord> list = repo.findByDeletedFalse();
-
         Map<String, Double> map = new HashMap<>();
-
         for (FinancialRecord r : list) {
             map.put(
                     r.getCategory(),
@@ -62,16 +56,13 @@ public class DashboardService {
     public Map<String, Double> monthly() {
         List<FinancialRecord> list = repo.findByDeletedFalse();
         Map<String, Double> map = new HashMap<>();
-
         for (FinancialRecord r : list) {
             String month = r.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM"));
             map.put(month, map.getOrDefault(month, 0.0) + r.getAmount());
         }
-
         return map;
     }
     public List<FinancialRecord> recent() {
-
         return repo.findByDeletedFalse()
                 .stream()
                 .sorted((a, b) -> b.getDate().compareTo(a.getDate()))
