@@ -1,7 +1,7 @@
 package assessment.Zorvyn_Project.controller;
 
-import assessment.Zorvyn_Project.dto.LoginRequest;
-import assessment.Zorvyn_Project.dto.SignupRequest;
+import assessment.Zorvyn_Project.dto.LoginDTO;
+import assessment.Zorvyn_Project.dto.SignUpDTO;
 import assessment.Zorvyn_Project.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +18,7 @@ public class AuthController {
     private AuthService service;
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@Valid @RequestBody SignupRequest request) {
-
+    public ResponseEntity<String> signup(@Valid @RequestBody SignUpDTO request) {
         return ResponseEntity.status(201).body(
                 service.signup(
                         request.getUsername(),
@@ -30,28 +29,25 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@Valid @RequestBody LoginRequest request) {
+    public ResponseEntity<Map<String, String>> login(@Valid @RequestBody LoginDTO request) {
 
         String token = service.login(
                 request.getUsername(),
                 request.getPassword(),
                 request.getRole()
         );
-
         return ResponseEntity.ok(Map.of("token", token));
     }
 
     @PutMapping("/update-role")
     public ResponseEntity<String> updateRole(@RequestParam String username,
                                              @RequestParam String role) {
-
         return ResponseEntity.ok(service.updateRole(username, role));
     }
 
     @PutMapping("/toggle-status")
     public ResponseEntity<String> toggleStatus(@RequestParam String username,
                                                @RequestParam String role) {
-
         return ResponseEntity.ok(service.toggleUserStatus(username, role));
     }
 }

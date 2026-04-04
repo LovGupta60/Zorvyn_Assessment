@@ -17,13 +17,13 @@ public class DashboardController {
     private DashboardService service;
 
     @GetMapping("/summary")
-    public ResponseEntity<Map<String, Double>> getSummary(){
+    public ResponseEntity<Map<String, Double>> summary(){
         return ResponseEntity.ok(service.summary());
     }
 
     @GetMapping("/category")
-    public ResponseEntity<Map<String, Double>> categoryWise() {
-        return ResponseEntity.ok(service.categoryWise());
+    public ResponseEntity<Map<String, Double>> category() {
+        return ResponseEntity.ok(service.category());
     }
 
     @GetMapping("/recent")

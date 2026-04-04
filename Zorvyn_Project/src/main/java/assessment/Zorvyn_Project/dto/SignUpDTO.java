@@ -3,7 +3,7 @@ package assessment.Zorvyn_Project.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public class SignupRequest {
+public class SignUpDTO {
 
     @NotBlank(message = "Username is required")
     private String username;

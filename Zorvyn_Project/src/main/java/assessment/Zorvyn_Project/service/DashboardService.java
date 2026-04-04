@@ -44,7 +44,7 @@ public class DashboardService {
 
         return map;
     }
-    public Map<String, Double> categoryWise() {
+    public Map<String, Double> category() {
 
         List<FinancialRecord> list = repo.findByDeletedFalse();
 

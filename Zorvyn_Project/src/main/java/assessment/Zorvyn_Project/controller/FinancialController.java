@@ -67,8 +67,8 @@ public class FinancialController {
 
     @DeleteMapping("/permanent/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<String> permanentDelete(@PathVariable Long id) {
-        service.permanentDelete(id);
+    public ResponseEntity<String> del(@PathVariable Long id) {
+        service.del(id);
         return ResponseEntity.ok("Record permanently deleted");
     }
     @GetMapping("/search")

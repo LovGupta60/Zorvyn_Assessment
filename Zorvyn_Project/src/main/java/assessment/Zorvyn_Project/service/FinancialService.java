@@ -53,7 +53,7 @@ public class FinancialService {
         r.setDeleted(true);
         repo.save(r);
     }
-    public void permanentDelete(Long id) {
+    public void del(Long id) {
         repo.deleteById(id);
     }
     public List<FinancialRecord> search(String keyword) {
