@@ -147,21 +147,6 @@ http://localhost:8080
 
 ---
 
-##  Version History
-
-### 🔹 0.2
-
-* Added search & filter functionality
-* Implemented soft delete + permanent delete
-* Added role update & toggle status
-
-### 🔹 0.1
-
-* Initial release
-* Basic CRUD + authentication
-
----
-
 ##  License
 
 This project is licensed under the **MIT License** - see the LICENSE.md file for details.
